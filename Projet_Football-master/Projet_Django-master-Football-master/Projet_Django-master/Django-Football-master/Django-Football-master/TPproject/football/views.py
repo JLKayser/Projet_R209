@@ -79,7 +79,7 @@ def delete(request, id):
 def delete2(request, id):
     joueur = models.Joueur.objects.get(pk=id)
     joueur.delete()
-    return HttpResponseRedirect("/football/")
+    return HttpResponseRedirect("/football/affiche/" + str(joueur.club_id) + "/")
 
 
 def update(request, id):
@@ -90,7 +90,7 @@ def update(request, id):
 def update2(request, id):
     joueur = models.Joueur.objects.get(pk=id)
     jform = JoueurForm(joueur.dico())
-    return render(request, "football/update2.html", {"form": jform, "id": id})
+    return render(request, "football/update2.html ", {"form": jform, "id": id})
 
 def traitementupdate(request, id):
     cform = ClubForm(request.POST)
@@ -118,6 +118,6 @@ def traitementupdate3(request, id):
         joueur_ajout = aform.save(commit=False)
         joueur_ajout.id = id
         joueur_ajout.save()
-        return HttpResponseRedirect("/football/affiche/")
+        return HttpResponseRedirect("/football")
     else:
         return render(request, "football/update3.html", {"form": aform, "id": id})
